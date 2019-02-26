@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
+import { ReturnStatement } from "@angular/compiler";
 
 @Component({
   selector: "app-home",
@@ -7,21 +8,20 @@ import { Http, Response, Headers } from "@angular/http";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-  constructor(private http: Http) {}
-  id: number;
-  private headers = new Headers({ "Content-Type": "application/json" });
   products = [];
-  fetchData = function() {
-    this.http
-      .get("http://localhost:5555/products")
-      .subscribe((res: Response) => {
-        this.products = res.json();
-        this.products;
-      });
-  };
+  id: number;
+  constructor(private http: Http) {
+    this.products = [];
+  }
+  ngOnInit() {
+    this.fetchData();
+  }
+
+  // private headers = new Headers({ "Content-Type": "application/json" });
+
   deleteProduct = function(id) {
     if (confirm("Are u sure?")) {
-      const url = `${"http://localhost:5555/products"}/${id}`;
+      const url = `${"http://localhost:1337/clients"}/${id}`;
       return this.http
         .delete(url, { headers: this.headers })
         .toPromise()
@@ -30,7 +30,14 @@ export class HomeComponent implements OnInit {
         });
     }
   };
-  ngOnInit() {
-    this.fetchData();
+
+  fetchData() {
+    this.http
+      .get("http://localhost:1337/clients")
+      .subscribe((res: Response) => {
+        this.products = res.json();
+        console.log(this.products);
+        // this.products;
+      });
   }
 }

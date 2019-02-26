@@ -24,7 +24,7 @@ export class UpdateProductComponent implements OnInit {
       name: product.name,
       color: product.color
     };
-    const url = `${"http://localhost:5555/products"}/${this.id}`;
+    const url = `${"http://localhost:1337/clients"}/${this.id}`;
     this.http
       .put(url, JSON.stringify(this.productObj), { headers: this.headers })
       .toPromise()
@@ -32,13 +32,12 @@ export class UpdateProductComponent implements OnInit {
         this.router.navigate(["/"]);
       });
   }
-
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params["id"];
     });
     this.http
-      .get("http://localhost:5555/products")
+      .get("http://localhost:1337/clients")
       .subscribe((res: Response) => {
         this.products = res.json();
         for (var i = 0; i < this.products.length; i++) {
