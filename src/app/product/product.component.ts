@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
       color: product.color
     };
     this.http
-      .post("http://localhost:5555/products/", this.productObj)
+      .post("http://localhost:1337/clients", this.productObj)
       .subscribe((res: Response) => {
         this.isAdded = true;
       });
